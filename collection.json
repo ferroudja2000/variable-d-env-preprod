@@ -257,7 +257,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"nomComplet\": \"Jean Dupont\",\r\n  \"email\": \"je3zeroaishusaaffhaze@example.com\",\r\n  \"password\": \"motdepasse123\",\r\n  \"telephone\": \"0612345678\",\r\n  \"fcm_token\": \"fcm_xxx\"\r\n}",
+          "raw": "{\r\n  \"nomComplet\": \"Jean Dupont\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"motdepasse123\",\r\n  \"telephone\": \"0612345678\",\r\n  \"fcm_token\": \"fcm_xxx\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -357,8 +357,8 @@
           "listen": "test",
           "script": {
             "exec": [
-              "pm.test(\"Status code is 201\", function () {\r",
-              "    pm.response.to.have.status(201);\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
               "});"
             ],
             "type": "text/javascript",
@@ -424,8 +424,8 @@
           "listen": "test",
           "script": {
             "exec": [
-              "pm.test(\"Status code is 201\", function () {\r",
-              "    pm.response.to.have.status(201);\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
               "});"
             ],
             "type": "text/javascript",
