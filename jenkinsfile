@@ -1,35 +1,18 @@
-```groovy
 pipeline {
     agent {
         docker {
-            image 'postman/newman:latest'
+            image 'postman/newman:latest' 
             args '--entrypoint='
         }
     }
 
     stages {
-
-        stage('Installation Allure') {
+        stage('lancement de la collection') {
             steps {
-                sh 'npm install -g newman-reporter-allure'
-            }
-        }
-
-        stage('Lancement de la collection') {
-            steps {
-                sh '''
-                    newman run collection.json \-e preprod.json \-r cli,allure
-                '''
-            }
-        }
-
-        stage('Rapport Allure') {
-            steps {
-                allure([
-                    results: [[path: 'allure-results']]
-                ])
+                script {
+                        sh "newman run collection.json -e preprod.json"
+                }
             }
         }
     }
 }
-```
