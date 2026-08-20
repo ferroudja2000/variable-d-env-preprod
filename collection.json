@@ -1,22 +1,607 @@
 {
-	"id": "44b9fda1-e5ab-4291-b8e2-7288bc004c93",
-	"name": "preprod",
-	"values": [
-		{
-			"key": "url",
-			"value": "https://preprod.thrundrz.fr/backendpublic/public/api/",
-			"type": "default",
-			"enabled": true
-		},
-		{
-			"key": "url2",
-			"value": "",
-			"type": "default",
-			"enabled": true
-		}
-	],
-	"color": null,
-	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2026-08-20T09:22:25.016Z",
-	"_postman_exported_using": "Postman/12.24.1"
+  "info": {
+    "_postman_id": "425a7751-ebbb-4d85-9f30-e410c6c956af",
+    "name": "variable d'env preprod",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57087022",
+    "_collection_link": "https://go.postman.co/collection/57087022-425a7751-ebbb-4d85-9f30-e410c6c956af?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "crere compte utilisateur",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.collectionVariables.set(\"token\", pm.response.json().token)\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nomComplet\": \"Jean Dupont\",\r\n  \"email\": \"jeanazuttuuuer@example.com\",\r\n  \"password\": \"motdepasse123\",\r\n  \"telephone\": \"0612345678\",\r\n  \"fcm_token\": \"fcm_xxx\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://preprod.thrundrz.fr/backendpublic/public/api/v1/register/client",
+          "protocol": "https",
+          "host": [
+            "preprod",
+            "thrundrz",
+            "fr"
+          ],
+          "path": [
+            "backendpublic",
+            "public",
+            "api",
+            "v1",
+            "register",
+            "client"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "choisir event",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"choisir 1 events\", function () {\r",
+              "    let events = pm.response.json().events \r",
+              "    let index1= Math.floor(Math.random()*events.length)\r",
+              "    pm.collectionVariables.set(\"even_id\",events[index1].id)\r",
+              "    \r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"page\": 1,\r\n  \"categoryId\": -1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url2}}evenementExplorer",
+          "host": [
+            "{{url2}}evenementExplorer"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "partager un event",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "pm.collectionVariables.set(\"even_id\", pm.response.json().data.even_id);\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "let titre_event = \"Je participe à cet événement\" + Math.floor(Math.random() * 1000)\r",
+              "pm.collectionVariables.set(\"titre_event\", titre_event)\r",
+              "\r",
+              "let contenu = \"Je serai là dès 20h\" + Math.floor(Math.random() * 1000)\r",
+              "pm.collectionVariables.set(\"contenu\", contenu)"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"even_id\": 42 ,\r\n  \"titre\": \"{{titre_event}}\",\r\n  \"contenu\": \"{{contenu}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://preprod.thrundrz.fr/backendpublic/public/api/v1/posts/share-event",
+          "protocol": "https",
+          "host": [
+            "preprod",
+            "thrundrz",
+            "fr"
+          ],
+          "path": [
+            "backendpublic",
+            "public",
+            "api",
+            "v1",
+            "posts",
+            "share-event"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "creer un 2eme utilisateur",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.collectionVariables.set(\"toke2\", pm.response.json().token)\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{toke2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nomComplet\": \"Jean Dupont\",\r\n  \"email\": \"je3zeroaishusaaffhaze@example.com\",\r\n  \"password\": \"motdepasse123\",\r\n  \"telephone\": \"0612345678\",\r\n  \"fcm_token\": \"fcm_xxx\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://preprod.thrundrz.fr/backendpublic/public/api/v1/register/client",
+          "protocol": "https",
+          "host": [
+            "preprod",
+            "thrundrz",
+            "fr"
+          ],
+          "path": [
+            "backendpublic",
+            "public",
+            "api",
+            "v1",
+            "register",
+            "client"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ajouter un commentaire",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{toke2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"contenu\": \"Super, je viens aussi !\",\r\n  \"parent_id\": null\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url2}}posts/{{even_id}}/comments",
+          "host": [
+            "{{url2}}posts"
+          ],
+          "path": [
+            "{{even_id}}",
+            "comments"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "liker l'annonce",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{toke2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://preprod.thrundrz.fr/backendpublic/public/api/v1/posts/{{even_id}}/like",
+          "protocol": "https",
+          "host": [
+            "preprod",
+            "thrundrz",
+            "fr"
+          ],
+          "path": [
+            "backendpublic",
+            "public",
+            "api",
+            "v1",
+            "posts",
+            "{{even_id}}",
+            "like"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "verifier les notifications",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{toke2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://preprod.thrundrz.fr/backendpublic/public/api/v1/notifications/non-lues",
+          "protocol": "https",
+          "host": [
+            "preprod",
+            "thrundrz",
+            "fr"
+          ],
+          "path": [
+            "backendpublic",
+            "public",
+            "api",
+            "v1",
+            "notifications",
+            "non-lues"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "suprimer compte",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{toke2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://preprod.thrundrz.fr/backendpublic/public/api/v1/app/deletecompte",
+          "protocol": "https",
+          "host": [
+            "preprod",
+            "thrundrz",
+            "fr"
+          ],
+          "path": [
+            "backendpublic",
+            "public",
+            "api",
+            "v1",
+            "app",
+            "deletecompte"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "supprimer 1ercompte",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://preprod.thrundrz.fr/backendpublic/public/api/v1/app/deletecompte",
+          "protocol": "https",
+          "host": [
+            "preprod",
+            "thrundrz",
+            "fr"
+          ],
+          "path": [
+            "backendpublic",
+            "public",
+            "api",
+            "v1",
+            "app",
+            "deletecompte"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "event_id_1",
+      "value": ""
+    },
+    {
+      "key": "titre_event",
+      "value": ""
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "toke2",
+      "value": ""
+    },
+    {
+      "key": "contenu",
+      "value": ""
+    },
+    {
+      "key": "even_id",
+      "value": ""
+    }
+  ]
 }
