@@ -53,7 +53,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"nomComplet\": \"Jean Dupont\",\r\n  \"email\": \"jeanazuttuuuer@example.com\",\r\n  \"password\": \"motdepasse123\",\r\n  \"telephone\": \"0612345678\",\r\n  \"fcm_token\": \"fcm_xxx\"\r\n}",
+          "raw": "{\r\n  \"nomComplet\": \"Jean Dupont\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"motdepasse123\",\r\n  \"telephone\": \"\",\r\n  \"fcm_token\": \"fcm_xxx\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
